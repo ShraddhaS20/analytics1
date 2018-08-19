@@ -54,8 +54,49 @@ pie(t1)
 barplot(t1, col=1:2, horiz=T)
 
 
-#matrix----
+#matrix---- can be of 1 datatype (num,logical or char)
 
-
+(m1=matrix(1:24,nrow=4))
+(m2=matrix(1:24,nrow=4, byrow=T))
+(m2=matrix(1:24,ncol=4, byrow=T))
+(x=trunc(runif(60,60,100)))
+#round, trunc, ceiling, floor
+plot(density(x))
+(m4=matrix(x, ncol=6))
+colSums(m4)
+rowSums(m4)
+colMeans(m4)
+rowMeans(m4)
+m4[m4> 67 & m4<86]
+m4[8:10,]
+m4[8:10,c(1,3,5)]
+rowSums(m4[8:10,c(1,3,5)])
 
 #array----
+
+#data.frame----
+#rollno, name, gender, course, marks1, marks2
+(rollno= 1:60)
+(name=paste('student1',1:60,sep='-'))
+(gender=sample(c('Male','Female'),size=60, replace=T, prob=c(.3,.7)))
+(course=sample(c('BBA','MBA','FPM'),size=60, replace=T,prob=c(.4,.5,.1)))
+
+
+
+
+
+
+
+
+
+
+
+#extracommands 
+name[1:10]
+name[c(15,20,36)]
+name[-1]    #removes 1 value (the first one)
+name[-c(1:10)]
+rev(name)
+name[60:1]
+name[-c(1:10,35:40)]
+
