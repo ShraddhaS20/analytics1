@@ -12,7 +12,7 @@ v4=c(TRUE,FALSE,T, F)
 class(v4)
 
 
-#summary on vectors
+#summary on vectors----
 mean(v1)
 median(v1)
 sd(v1)
@@ -80,18 +80,75 @@ rowSums(m4[8:10,c(1,3,5)])
 (name=paste('student1',1:60,sep='-'))
 (gender=sample(c('Male','Female'),size=60, replace=T, prob=c(.3,.7)))
 (course=sample(c('BBA','MBA','FPM'),size=60, replace=T,prob=c(.4,.5,.1)))
+(marks1= ceiling(rnorm(60,mean=65, sd=7)))
+(marks2= ceiling(rnorm(60, mean=60, sd=11)))
+(grades=sample(c('A','B','C'), size=60, replace=T))
+students= data.frame(rollno,name,  gender, course, marks1, marks2, grades, stringsAsFactors = F)
+class(students)
+
+summary(students)
+students[, c('name')]
+students[students$gender == 'Male', c('rollno', 'gender','marks1')]
+students[students$gender == 'Male' & students$grades =='C', c('rollno', 'gender','marks1')]
+students[students$gender == 'Female'| (students$marks1>65 & students$marks1<70), c('rollno','name', 'gender','marks1')]
+students$gender
+t1=table(students$gender)
+barplot(table(students$course),ylim=c(0,50), col=1:3)
+text(1:3,table(students$course)+5,table(students$course))
+#+5 is used to print text 5 units above the bar so as not to clash
+
+str(students)  #structure of the data.
+nrow(students)
+names(students)
+dim(students)
+head(students)   #first few records of the datasheet
+tail(students)  #last few records
+head(students, n=7)
+
+#avg marks scores by each gender in marks1
+#gender, marks1
+aggregate(students$marks1 , by=list(students$gender), FUN=mean)
+#aggregate of marks one based on each gender, function used is mean.
+aggregate(students$marks2 , by=list(students$course), FUN=max)
+aggregate(students$marks2 , by=list(students$course, students$gender), FUN=mean)
+
+#dplyr----
+library(dplyr)
+
+students %>% group_by(gender) %>% summarize(mean(marks1))
+students %>% group_by(course,gender) %>% summarize(meanmarks1= mean(marks1) , min(marks2), max(marks2)) %>% arrange(desc(meanmarks1))
+
+students %>% arrange(desc(marks1)) %>% filter(gender=='Male') %>% head(n=4)
+ #select 10% of the random rows
+students %>% sample_frac(0.1)
+
+#random 5 students selected
+students %>% sample_n(4) %>%arrange(course) %>% select(name,gender)
+students %>% arrange(course, grades, marks1) %>% select(course, grades, marks1)
+
+#top 5 of each course
+#check below data once
+students %>% select(name, course, grades, marks1) %>% group_by(course,marks1) %>% arrange(course, grades, marks1) %>% top_n(5) 
+
+#factor
+names(students)
+students$gender = factor(students$gender)
+summary(students$gender)
+summary(students$course)
+students$course= factor(students$course, ordered=T)
+summary(students$course)
+students$course= factor( students$course, ordered=T, level= c('FPM','MBA','BBA'))
+summary(students$course)
+
+students$grades
+#C<A<B
+students$grades=factor(students$grades, ordered=T, levels=c('C', 'A','B'))
+students$grades
+table(students$grades)
+barplot(table(students$grades))
 
 
-
-
-
-
-
-
-
-
-
-#extracommands 
+#extracommands----
 name[1:10]
 name[c(15,20,36)]
 name[-1]    #removes 1 value (the first one)
