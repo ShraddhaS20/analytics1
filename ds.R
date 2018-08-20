@@ -156,4 +156,13 @@ name[-c(1:10)]
 rev(name)
 name[60:1]
 name[-c(1:10,35:40)]
+students
+write.csv(students,'./data/iimtrichy.csv')
+students2= read.csv('./data/iimtrichy.csv') #direct address of file provided
+head(students2)
+students3= read.csv(file.choose())
+#let you choose  the file from the folders 
+#how to remove the extra column
+students3= students3[,-1]
+head(students3)
 
