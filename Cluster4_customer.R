@@ -85,3 +85,4 @@ data_clus_2$Cust_id
 # Write CSV
 
 write.csv(data_clus_2[,1], file = "./data/data_clus_2.csv")
+
